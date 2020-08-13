@@ -18,7 +18,7 @@ setup(
         'jupyterhub>=0.8',
         'jinja2',
         'kubernetes>=10.1.0',
-        'pyYAML',
+        'pyYAML~=3.12',
     ],
     python_requires='>=3.6',
     extras_require={
