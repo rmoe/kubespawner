@@ -239,7 +239,6 @@ class NamespacedResourceReflector(LoggingConfigurable):
                     # ref: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.16/#event-v1-core
                     cur_delay = 0.1
                     resource = watch_event['object']
-                    self.log.debug("Got event: {}".format(watch_event))
                     if watch_event['type'] == 'DELETED':
                         # This is an atomic delete operation on the dictionary!
                         self.resources.pop(resource["metadata"]["name"], None)
