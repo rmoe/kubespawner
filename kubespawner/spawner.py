@@ -1558,7 +1558,6 @@ class KubeSpawner(Spawner):
         if not self.pod_reflector.first_load_future.done():
             yield self.pod_reflector.first_load_future
         data = self.pod_reflector.pods.get(self.pod_name, None)
-        self.log.info("Got data %s in poll()", data)
         if data is not None:
             if data["status"]["phase"] == 'Pending':
                 return None
@@ -1569,11 +1568,11 @@ class KubeSpawner(Spawner):
             for c in ctr_stat:
                 # return exit code if notebook container has terminated
                 if c["name"] == 'notebook':
-                    if c["state"] == "terminated":
+                    if "terminated" in c["state"]:
                         # call self.stop to delete the pod
                         if self.delete_stopped_pods:
                             yield self.stop(now=True)
-                        return c["state"]["exitCode"]
+                        return c["state"]["terminated"]["exitCode"]
                     break
             # None means pod is running or starting up
             return None
