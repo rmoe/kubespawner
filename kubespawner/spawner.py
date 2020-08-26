@@ -1558,6 +1558,7 @@ class KubeSpawner(Spawner):
         if not self.pod_reflector.first_load_future.done():
             yield self.pod_reflector.first_load_future
         data = self.pod_reflector.pods.get(self.pod_name, None)
+        self.log.info("Got data %s in poll()", data)
         if data is not None:
             if data["status"]["phase"] == 'Pending':
                 return None
